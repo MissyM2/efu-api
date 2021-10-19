@@ -1,11 +1,39 @@
 {
   "name": "efu-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Graphql backend with node, prisma, postgres and docker",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon",
+    "build": "rimraf ./build && tsc",
+    "start": "npm run build && node build/index.js",
+    "migrate": "npx prisma migrate dev"
   },
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "Graphql",
+    "Backend",
+    "Prisma",
+    "Postgres",
+    "Docker",
+    "Node.js"
+  ],
+  "author": "Inspired Technology Coaching",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^16.11.1",
+    "nodemon": "^2.0.13",
+    "prisma": "^3.2.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.2.1",
+    "apollo-server-express": "^3.4.0",
+    "express": "^4.17.1",
+    "graphql": "^15.6.1"
+  },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
+  }
 }
