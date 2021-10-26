@@ -4,53 +4,24 @@ const Mutation = {
   registerStudent: (parent, args) => {
     return prisma.student.create({
       data: {
-        email: args.email,
-        fullName: args.fullName,
-        dept: args.deptId && {
-          connect: { id: args.deptId },
-        },
-      },
-    });
-  },
-  enroll: (parent, args) => {
-    return prisma.student.update({
-      where: { id: Number(args.id) },
-      data: {
-        enrolled: true,
-      },
-    });
-  },
-
-  createTeacher: (parent, args) => {
-    return prisma.teacher.create({
-      data: {
         email: args.data.email,
-        fullName: args.data.fullName,
-        courses: {
-          create: args.data.courses,
-        },
+        firstName: args.data.firstName,
+        lastName: args.data.lastName,
+        password: args.data.password,
       },
     });
   },
 
   createCourse: (parent, args) => {
-    console.log(parent, args);
+    console.log('what are args', args);
     return prisma.course.create({
       data: {
-        code: args.code,
-        title: args.title,
-        teacher: args.teacherEmail && {
-          connect: { email: args.teacherEmail },
+        code: args.data.code,
+        title: args.data.title,
+        longDesc: args.data.longDesc,
+        student: args.studentId && {
+          connect: { id: args.studentId },
         },
-      },
-    });
-  },
-
-  createDepartment: (parent, args) => {
-    return prisma.department.create({
-      data: {
-        name: args.name,
-        description: args.description,
       },
     });
   },

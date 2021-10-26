@@ -11,59 +11,28 @@ datasource db {
 }
 
 model Student {
-  id        Int        @id @default(autoincrement())
-  email     String     @unique @db.VarChar(255)
-  fullName  String?    @db.VarChar(255)
-  enrolled  Boolean    @default(false)
-  dept      Department @relation(fields: [deptId], references: [id])
-  deptId    Int
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-
+  id              Int             @id @default(autoincrement())
+  email           String          @unique @db.VarChar(75)
+  firstName       String?         @db.VarChar(50)
+  lastName        String?         @db.VarChar(50)
+  password        String          @db.VarChar(20)
+  courses         Course[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
   @@map(name: "student")
 }
 
-model Department {
-  id          Int       @id @default(autoincrement())
-  name        String    @unique
-  description String?   @db.VarChar(500)
-  students    Student[]
-  courses     Course[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  @@map(name: "department")
-}
-
-model Teacher {
-  id        Int         @id @default(autoincrement())
-  email     String      @unique @db.VarChar(255)
-  fullName  String?     @db.VarChar(255)
-  courses   Course[]
-  type      TeacherType @default(FULLTIME)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-
-  @@map(name: "teacher")
-}
 
 model Course {
-  id          Int         @id @default(autoincrement())
-  code        String      @unique
-  title       String      @db.VarChar(255)
-  description String?     @db.VarChar(500)
-  teacher     Teacher?    @relation(fields: [teacherId], references: [id])
-  teacherId   Int?
-  dept        Department? @relation(fields: [deptId], references: [id])
-  deptId      Int?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-
+  id            Int             @id @default(autoincrement())
+  student       Student?        @relation(fields: [studentId], references: [id])
+  studentId     Int?
+  code          String?         @db.VarChar(10)
+  title         String?         @db.VarChar(50)
+  longDesc      String?          @db.VarChar(100)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
   @@map(name: "course")
 }
 
-enum TeacherType {
-  FULLTIME
-  PARTTIME
-}
 

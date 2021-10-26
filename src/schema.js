@@ -4,79 +4,47 @@ const typeDefs = gql`
   type Student {
     id: ID!
     email: String!
-    fullName: String!
-    dept: Department!
-    enrolled: Boolean
-    updatedAt: String
-    createdAt: String
-  }
-
-  type Department {
-    id: ID!
-    name: String!
-    description: String
-    students: [Student]
+    firstName: String!
+    lastName: String!
+    password: String!
     courses: [Course]
-    updatedAt: String
-    createdAt: String
-  }
-
-  type Teacher {
-    id: ID!
-    email: String!
-    fullName: String!
-    courses: [Course]
-    type: TeacherType
     updatedAt: String
     createdAt: String
   }
 
   type Course {
     id: ID!
+    student: Student!
     code: String!
     title: String!
-    description: String
-    teacher: Teacher
-    dept: Department
+    longDesc: String
     updatedAt: String
     createdAt: String
   }
 
-  input TeacherCreateInput {
+  input StudentCreateInput {
     email: String!
-    fullName: String!
-    courses: [CourseCreateWithoutTeacherInput!]
+    firstName: String!
+    lastName: String!
+    password: String!
   }
 
-  input CourseCreateWithoutTeacherInput {
+  input CourseCreateInput {
     code: String!
     title: String!
-    description: String
+    longDesc: String!
   }
 
   type Query {
-    enrollment: [Student!]
-    students: [Student!]
+    students: [Student]
     student(id: ID!): Student
-    departments: [Department!]!
-    department(id: ID!): Department
-    courses: [Course!]!
+    courses: [Course]!
     course(id: ID!): Course
-    teachers: [Teacher!]!
-    teacher(id: ID!): Teacher
   }
 
   type Mutation {
-    registerStudent(email: String!, fullName: String!, deptId: Int!): Student!
-    enroll(id: ID!): Student
-    createTeacher(data: TeacherCreateInput!): Teacher!
-    createCourse(code: String!, title: String!, teacherEmail: String): Course!
-    createDepartment(name: String!, description: String): Department!
-  }
-
-  enum TeacherType {
-    FULLTIME
-    PARTTIME
+    registerStudent(data: StudentCreateInput!): Student!
+    createCourse(data: CourseCreateInput!, studentId: Int!): Course!
   }
 `;
 

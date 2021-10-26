@@ -1,28 +1,20 @@
 const { prisma } = require('../prisma/client');
 
 const Query = {
-  enrollment: (parent, args) => {
-    return prisma.student.findMany({
-      where: { enrolled: true },
-    });
-  },
   student: (parent, args) => {
-    return prisma.student.findFirst({
-      where: { id: Number(args.id) },
+    // must cast id as number to avoid int/string error
+    const id = +args.id;
+    return prisma.student.findUnique({
+      where: {
+        id,
+      },
+      include: { courses: true },
     });
   },
 
   students: (parent, args) => {
-    return prisma.student.findMany({});
-  },
-
-  departments: (parent, args) => {
-    return prisma.department.findMany({});
-  },
-
-  department: (parent, args) => {
-    return prisma.department.findFirst({
-      where: { id: Number(args.id) },
+    return prisma.student.findMany({
+      include: { courses: true },
     });
   },
 
@@ -32,16 +24,6 @@ const Query = {
 
   course: (parent, args) => {
     return prisma.course.findFirst({
-      where: { id: Number(args.id) },
-    });
-  },
-
-  teachers: (parent, args) => {
-    return prisma.teacher.findMany({});
-  },
-
-  teacher: (parent, args) => {
-    return prisma.teacher.findFirst({
       where: { id: Number(args.id) },
     });
   },
