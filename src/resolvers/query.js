@@ -27,6 +27,16 @@ const Query = {
       where: { id: Number(args.id) },
     });
   },
+
+  deliverables: (parent, args) => {
+    return prisma.deliverable.findMany({});
+  },
+
+  deliverable: (parent, args) => {
+    return prisma.deliverable.findFirst({
+      where: { id: Number(args.id) },
+    });
+  },
 };
 
 module.exports = {

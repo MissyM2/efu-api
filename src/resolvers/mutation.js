@@ -25,6 +25,22 @@ const Mutation = {
       },
     });
   },
+
+  createDeliverable: (parent, args) => {
+    console.log('what are args', args);
+    return prisma.deliverable.create({
+      data: {
+        dueDate: args.data.code,
+        title: args.data.title,
+        longDesc: args.data.longDesc,
+        prepTime: args.data.prepTime,
+        impact: args.data.impact,
+        course: args.courseId && {
+          connect: { id: args.courseId },
+        },
+      },
+    });
+  },
 };
 
 module.exports = {
