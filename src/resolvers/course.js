@@ -2,13 +2,18 @@ const { prisma } = require('../prisma/client');
 
 export default {
   Query: {
-    courses: (parent, args) => {
-      return prisma.course.findMany({});
-    },
-
     course: (parent, args) => {
-      return prisma.course.findFirst({
-        where: { id: Number(args.id) },
+      const id = +args.id;
+      return prisma.course.findUnique({
+        where: {
+          id,
+        },
+        include: { deliverables: true },
+      });
+    },
+    courses: (parent, args) => {
+      return prisma.course.findMany({
+        include: { deliverables: true },
       });
     },
   },

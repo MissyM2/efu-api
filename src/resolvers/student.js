@@ -3,13 +3,18 @@ const { prisma } = require('../prisma/client');
 export default {
   Query: {
     student: (parent, args) => {
-      // must cast id as number to avoid int/string error
       const id = +args.id;
       return prisma.student.findUnique({
         where: {
           id,
         },
-        include: { courses: true },
+        include: {
+          courses: {
+            include: {
+              deliverables: true,
+            },
+          },
+        },
       });
     },
 

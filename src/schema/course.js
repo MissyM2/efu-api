@@ -7,6 +7,7 @@ export default gql`
     code: String!
     title: String!
     longDesc: String
+    deliverables: [Deliverable]
     updatedAt: String
     createdAt: String
   }

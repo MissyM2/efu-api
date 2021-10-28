@@ -8,6 +8,7 @@ export default gql`
     lastName: String!
     password: String!
     courses: [Course]
+    deliverables: [Deliverable]
     updatedAt: String
     createdAt: String
   }
