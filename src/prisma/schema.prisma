@@ -17,7 +17,6 @@ model Student {
   lastName        String?         @db.VarChar(50)
   password        String          @db.VarChar(20)
   courses         Course[]
-  deliverables    Deliverable[]
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
   @@map(name: "student")
@@ -41,8 +40,6 @@ model Deliverable {
   id            Int               @id @default(autoincrement())
   course        Course?           @relation(fields: [courseId], references: [id])
   courseId      Int?
-  student       Student           @relation(fields: [studentId], references: [id])
-  studentId     Int
   dueDate       DateTime?         
   title         TitleType         @default(HOMEWORK)
   longDesc      String            @db.VarChar(50)
